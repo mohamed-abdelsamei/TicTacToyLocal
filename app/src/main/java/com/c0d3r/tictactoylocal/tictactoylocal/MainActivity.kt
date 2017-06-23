@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             btnSelected.setBackgroundColor(Color.GREEN)
             player1.add(cellID)
             activePlayer = 2
+            AutoPlay()
         }else{
             btnSelected.setBackgroundColor(Color.BLUE)
             player2.add(cellID)
@@ -69,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             winner =  2
         }
 
-        //row1
+        //row3
         if(player1.contains(7)&&player1.contains(8)&&player1.contains(9)){
             winner =  1
         }
@@ -110,5 +113,36 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this,"Thw winner is player 2", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    fun AutoPlay(){
+        var emptyCells = ArrayList<Int>()
+        for(cellID in 1..9){
+            if(!(player1.contains(cellID)||player2.contains(cellID))){
+                emptyCells.add(cellID)
+            }
+        }
+
+        val r = Random()
+        val randIndex = r.nextInt(emptyCells.size-0)+0
+        val cellID = emptyCells[randIndex]
+
+        var btnSelect:Button?
+        when(cellID){
+            1->btnSelect=btn1
+            2->btnSelect=btn2
+            3->btnSelect=btn3
+            4->btnSelect=btn4
+            5->btnSelect=btn5
+            6->btnSelect=btn6
+            7->btnSelect=btn7
+            8->btnSelect=btn8
+            9->btnSelect=btn9
+            else ->{
+                btnSelect=btn1
+            }
+        }
+
+        PlayGame(cellID,btnSelect)
     }
 }
